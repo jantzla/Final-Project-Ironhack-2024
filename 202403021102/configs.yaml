@@ -1,0 +1,9 @@
+batch_size: 16
+height: 32
+learning_rate: 0.0005
+max_text_length: 16
+model_path: C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024\202403021102
+train_epochs: 1000
+train_workers: 20
+vocab: '''GnvcVFep2?g!R-DKAQjxd"0mZBOos.TC46il5tky:UPMhwq(Eua,f1Y;8H7S9WNrIJz&3b#L)'
+width: 128
