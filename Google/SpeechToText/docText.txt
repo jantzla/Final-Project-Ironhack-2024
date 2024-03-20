@@ -1,0 +1,21 @@
+index.html:
+
+@app.route('/adjust_transcription', methods=['GET', 'POST'])
+def adjust_transcription():
+    index = session.get('current_index', 0)
+    filenames = session.get('filenames', [])
+    
+    if index >= len(filenames):
+        return redirect(url_for('voice_control'))
+    
+    filename = filenames[index]
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    docText, confidence_score = transcribe_image(image_path)
+    
+    if request.method == 'POST':
+        adjusted_transcript = request.form.get('transcript')
+        unique_audio_filename = save_transcript_as_audio(adjusted_transcript, "output_" + str(index))
+        session['current_index'] = index + 1
+        return redirect(url_for('adjust_transcription'))
+    
+    return render_template('transcription.html', transcription=docText, confidence_score=confidence_score, filename=filename)

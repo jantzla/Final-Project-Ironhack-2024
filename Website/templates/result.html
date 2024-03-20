@@ -1,0 +1,82 @@
+<div class="container">
+    <h1>Transcript of Your Notes</h1>
+    {% for transcript in transcripts %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <h3 class="card-title">Transcript Upload {{ loop.index }}</h3>
+            <textarea class="form-control" rows="6" disabled>{{ transcript }}</textarea>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% for audio_file in audio_files %}
+    <div class="audio-player mt-3">
+        <h2>Listen to the Audio</h2>
+        <h3>Audio Upload {{ loop.index }}</h3>
+        <audio controls id="audio-{{ loop.index }}">
+            <source src="{{ url_for('static', filename='audio/' + audio_file) }}" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    {% endfor %}
+ 
+    
+    <button class="btn btn-primary mt-3" onclick="startRecognition()">Start Voice Commands</button>
+
+
+    <script>
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.lang = 'en-GB';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+    
+        recognition.onresult = function(event) {
+            var command = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
+            var audios = document.querySelectorAll('audio');
+            
+            // Function to play the audio by index (1-indexed for natural language use)
+            function playAudioByIndex(index) {
+                if (index > 0 && index <= audios.length) {
+                    var audioToPlay = audios[index - 1]; // Convert to 0-indexed
+                    audioToPlay.play();
+                }
+            }
+    
+            // Parse the command for "play" followed by an ordinal number (e.g., first, second)
+            if (command.includes('play')) {
+                var numberPattern = /\d+/g;
+                var numbers = command.match(numberPattern);
+                if (numbers && numbers.length > 0) {
+                    var index = parseInt(numbers[0], 10);
+                    playAudioByIndex(index);
+                } else if (command.includes('first')) {
+                    playAudioByIndex(1);
+                } else if (command.includes('second')) {
+                    playAudioByIndex(2);
+                } else if (command.includes('third')) {
+                    playAudioByIndex(3);
+                } else if (command.includes('fourth')) {
+                    playAudioByIndex(4);
+                } else if (command.includes('fifth')) {
+                    playAudioByIndex(5);
+                }
+            } else if (command.includes('pause')) {
+                audios.forEach(audio => audio.pause());
+            } else if (command.includes('stop')) {
+                audios.forEach(audio => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+            }
+        };
+    
+        function startRecognition() {
+            recognition.start();
+        }
+    </script>
+    
+
+    <a href="{{ url_for('start_over') }}" class="btn btn-secondary mt-3">Upload another Protocol</a>
+
+</div>

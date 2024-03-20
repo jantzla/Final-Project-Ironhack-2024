@@ -17,8 +17,11 @@ with io.open(audio_file, 'rb') as f:
 config = speech.RecognitionConfig(
     encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16,
     sample_rate_hertz = 24000,
-    language_code = 'en-US'
+    language_code = 'en-US',
+    model = 'command_and_search'
 )
 
 # Transcripe the audio file
 response = client.recognize(config = config, audio = audio)
+for result in response.results:
+    print(result.alternatives[0].transcript)

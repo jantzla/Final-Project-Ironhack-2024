@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NoteWhisperer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class='text-center'>NoteWhisperer</h1>
+    <form class="p-3 text-center" action="/" method="post" enctype="multipart/form-data">
+        <!-- Custom file upload button for multiple files -->
+        <input id="file-upload" class="form-control" type="file" name="imagefiles" accept=".jpg, .jpeg, .png, .pdf" multiple onchange="previewFiles()">
+        <div id="preview"></div>
+        <input class="btn btn-primary mt-3" type="submit" value="Transform Notes">
+    </form>
+    <script>
+        function previewFiles() {
+            var preview = document.getElementById('preview');
+            var files   = document.getElementById('file-upload').files;
+
+            function readAndPreview(file) {
+                // Make sure `file.name` matches our extensions criteria
+                if ( /\.(jpe?g|png|pdf)$/i.test(file.name) ) {
+                    var reader = new FileReader();
+
+                    reader.addEventListener("load", function () {
+                        var image = new Image();
+                        image.height = 100; // Set the height
+                        image.title = file.name;
+                        image.src = this.result;
+                        preview.appendChild(image);
+                    }, false);
+
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            if (files) {
+                [].forEach.call(files, readAndPreview);
+            }
+        }
+    </script>
+    {% if message %}
+    <div class="alert alert-danger text-center" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
+</body>
+</html>
