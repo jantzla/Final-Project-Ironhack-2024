@@ -6,11 +6,14 @@ from google.cloud.vision_v1 import types
 from google.cloud import texttospeech_v1
 import uuid
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__)
 
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default_key')
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024_private\AuthKey.json'
+#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024_private\AuthKey.json'
 
 vision_client = vision.ImageAnnotatorClient()
 text_to_speech_client = texttospeech_v1.TextToSpeechClient()

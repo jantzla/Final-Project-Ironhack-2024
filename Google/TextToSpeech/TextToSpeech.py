@@ -2,7 +2,8 @@ import os, io
 from google.cloud import texttospeech
 from google.cloud import texttospeech_v1
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024\Google\TextToSpeech\AccessKey_API.json'
+from dotenv import load_dotenv
+load_dotenv() 
 client = texttospeech_v1.TextToSpeechClient()
 
 

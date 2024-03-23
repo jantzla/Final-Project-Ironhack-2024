@@ -2,8 +2,8 @@ import os, io
 from google.cloud import vision
 from google.cloud.vision_v1 import types
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024\Google\VisionApi\AccessKey_API.json'
-
+from dotenv import load_dotenv
+load_dotenv() 
 client = vision.ImageAnnotatorClient()
 
 folder = r'C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024\Google\VisionApi\images'
