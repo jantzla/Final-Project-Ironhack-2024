@@ -1,0 +1,44 @@
+/* Adjust the font size of navbar links */
+.navbar-nav .nav-link {
+    font-size: 22px; /* Adjust the size as needed */
+}
+
+/* Optional: Adjust the font size of the navbar brand */
+.navbar-brand {
+    font-size: 22px; /* Adjust the size as needed */
+}
+
+/* Increases the space between navigation items */
+.navbar-nav .nav-item {
+    margin-right: 17px; /* Adjust this value as needed */
+  }
+  
+
+
+  .header-container {
+    text-align: center; 
+    padding: 20px;
+    background-color: #E9E9E8;
+    font-size: 2.0rem; /* Adjust size as needed */
+    color: #192E3C; /* Example: A green background */
+    display: flex;
+    justify-content: center; /* Centers its children (the logo-container and the p tag) horizontally */
+    align-items: center; /* Centers its children vertically */
+    flex-direction: column; /* Stacks the children vertically */
+    width: 100%; /* Ensures the container stretches across the width of its parent */
+}
+
+
+.logo-container {
+    display: flex; /* Enables Flexbox for side-by-side logo layout */
+    justify-content: center; /* Center the items horizontally in the container */
+    align-items: center; /* Align items vertically in the middle */
+}
+
+.title-logo, .dummy-logo {
+    max-height: 200px; /* Adjust based on your logos' sizes */
+}
+
+.content-container {
+    margin-top: 25px;
+}

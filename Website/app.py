@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, send_file, session
+# Libaries
+from flask import Flask, render_template, request, redirect, url_for, session
 import os
 import io
 from google.cloud import vision
@@ -12,8 +13,6 @@ load_dotenv()
 app = Flask(__name__)
 
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default_key')
-
-#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'C:\Users\ljant\Desktop\Ironhack\Projects\Final-Project-Ironhack-2024_private\AuthKey.json'
 
 vision_client = vision.ImageAnnotatorClient()
 text_to_speech_client = texttospeech_v1.TextToSpeechClient()
@@ -48,11 +47,9 @@ def upload_files():
                 file.save(filepath)
                 filenames.append(filename)
         
-        # Store the list of filenames in the session
         session['filenames'] = filenames
-        session['current_index'] = 0  # Track the current file being processed
+        session['current_index'] = 0
         
-        # Redirect to process the first file
         return redirect(url_for('adjust_transcription'))
 
     return render_template('index.html')
@@ -124,12 +121,18 @@ def submit_adjusted_transcript():
 def save_transcript_as_audio(text, filename):
     client = texttospeech_v1.TextToSpeechClient()
     synthesis_input = texttospeech_v1.SynthesisInput(text=text)
-    voice = texttospeech_v1.VoiceSelectionParams(language_code="en-US", name="en-US-Neural2-C")
+    
+    # Retrieve the selected voice from the form
+    voice_name = request.form.get('voiceName', 'en-US-Neural2-C')  # Default to 'en-US-Neural2-C'
+    
+    voice = texttospeech_v1.VoiceSelectionParams(
+        language_code="en-US",
+        name=voice_name
+    )
     audio_config = texttospeech_v1.AudioConfig(audio_encoding=texttospeech_v1.AudioEncoding.MP3)
 
     response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
 
-    # Save the audio file in the static/audio directory with a unique filename
     unique_filename = f"{filename}_{uuid.uuid4().hex}.mp3"
     filepath = os.path.join(AUDIO_FOLDER, unique_filename)
     with open(filepath, 'wb') as output:

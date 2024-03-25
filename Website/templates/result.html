@@ -1,5 +1,6 @@
 <div class="container">
-    <h1>Transcript of Your Notes</h1>
+    <h1>NoteWhisperer</h1>
+    <p>Your audio guide is ready! Now you can control playback through simple voice commands.</p>
     {% for transcript in transcripts %}
     <div class="card mt-3">
         <div class="card-body">
@@ -11,7 +12,7 @@
     
     {% for audio_file in audio_files %}
     <div class="audio-player mt-3">
-        <h2>Listen to the Audio</h2>
+        <p>Play, pause, or stop as you work through your experiment-hands-free and focused. Remember, NoteWhisperer is here to assist whenever you're ready for the next set of notes or protocols. Just load them up, and let's continue making science easier together.</p>
         <h3>Audio Upload {{ loop.index }}</h3>
         <audio controls id="audio-{{ loop.index }}">
             <source src="{{ url_for('static', filename='audio/' + audio_file) }}" type="audio/mp3">

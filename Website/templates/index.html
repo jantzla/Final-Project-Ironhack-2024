@@ -3,34 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>NoteWhisperer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <style>
+        #uploadForm {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1 class='text-center'>NoteWhisperer</h1>
-    <form class="p-3 text-center" action="/" method="post" enctype="multipart/form-data">
-        <!-- Custom file upload button for multiple files -->
-        <input id="file-upload" class="form-control" type="file" name="imagefiles" accept=".jpg, .jpeg, .png, .pdf" multiple onchange="previewFiles()">
-        <div id="preview"></div>
-        <input class="btn btn-primary mt-3" type="submit" value="Transform Notes">
-    </form>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/logo_white.png') }}" alt="Logo" height="40">
+          </a>
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    
+<!-- Logo and Title Container -->
+<div class="header-container">
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='images/logo_cut.png') }}" alt="NoteWhisperer Logo" class="title-logo">
+        <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
+    </div>
+    <p>Voice-activate your lab notes for hands-free experiments.</p>
+</div>
+
+<!-- Rest of the content -->
+<div class="content-container">
+    <p>Transform your experimental protocols into an audible format with NoteWhisperer, your digital lab assistant. Simply upload your notes or protocols in image or PDF format, and let NoteWhisperer read them out loud to you. Keep your workspace clean and your hands free to focus on your experiments without the worry of contaminating your clean bench.</p>
+    <p>Tell me which format your protocol is in:</p>
+    <div class="selection text-center">
+        <!-- Selection options -->
+        <div class="container text-center mt-4">
+            <p>Tell Me The Format Of Your Protocol:</p>
+            <div class="btn-group" role="group" aria-label="Document Type">
+                <button type="button" class="btn btn-primary" onclick="showUploadField('image')">Image</button>
+                <button type="button" class="btn btn-secondary" onclick="showUploadField('pdf')">PDF</button>
+            </div>
+        </div>
+
+        <form id="uploadForm" class="p-3 text-center" action="/" method="post" enctype="multipart/form-data" style="display: none;">
+            <input id="file-upload" class="form-control" type="file" name="imagefiles" accept="" multiple onchange="previewFiles()">
+            <div id="preview"></div>
+            <input class="btn btn-primary mt-3" type="submit" value="Transform Notes">
+        </form>
+
+    </div>
+</div>
+
     <script>
+        function showUploadField(fileType) {
+            var fileInput = document.getElementById('file-upload');
+            if (fileType === 'image') {
+                fileInput.setAttribute('accept', '.jpg, .jpeg, .png');
+            } else if (fileType === 'pdf') {
+                fileInput.setAttribute('accept', '.pdf');
+            }
+            document.getElementById('uploadForm').style.display = 'block'; // Show the form
+        }
+
+
         function previewFiles() {
             var preview = document.getElementById('preview');
-            var files   = document.getElementById('file-upload').files;
+            var files = document.getElementById('file-upload').files;
+
+            // Clear existing previews
+            preview.innerHTML = '';
 
             function readAndPreview(file) {
-                // Make sure `file.name` matches our extensions criteria
-                if ( /\.(jpe?g|png|pdf)$/i.test(file.name) ) {
+                if (/\.(jpe?g|png)$/i.test(file.name)) {
                     var reader = new FileReader();
-
-                    reader.addEventListener("load", function () {
+                    reader.onload = function (e) {
                         var image = new Image();
-                        image.height = 100; // Set the height
+                        image.height = 250;
                         image.title = file.name;
-                        image.src = this.result;
+                        image.src = e.target.result;
                         preview.appendChild(image);
-                    }, false);
-
+                    };
                     reader.readAsDataURL(file);
                 }
             }
@@ -40,10 +102,15 @@
             }
         }
     </script>
+
     {% if message %}
     <div class="alert alert-danger text-center" role="alert">
         {{ message }}
     </div>
     {% endif %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js">
+
+</script>
+
 </body>
 </html>
