@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
-            <img src="{{ url_for('static', filename='images/logo_white.png') }}" alt="Logo" height="40">
+            <img src="{{ url_for('static', filename='images/logo_white_cut.png') }}" alt="Logo" height="40">
           </a>
           <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
@@ -34,25 +34,24 @@
     
 <!-- Logo and Title Container -->
 <div class="header-container">
-    <div class="logo-container">
+    <div class="left-side">
         <img src="{{ url_for('static', filename='images/logo_cut.png') }}" alt="NoteWhisperer Logo" class="title-logo">
-        <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
+        <p>Voice-activate your lab notes for hands-free experiments.</p>
     </div>
-    <p>Voice-activate your lab notes for hands-free experiments.</p>
+    <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
 </div>
 
 <!-- Rest of the content -->
 <div class="content-container">
-    <p>Transform your experimental protocols into an audible format with NoteWhisperer, your digital lab assistant. Simply upload your notes or protocols in image or PDF format, and let NoteWhisperer read them out loud to you. Keep your workspace clean and your hands free to focus on your experiments without the worry of contaminating your clean bench.</p>
-    <p>Tell me which format your protocol is in:</p>
+    <p class="lead"> Transform your experimental protocols into an audible format with <span class="highlight">NoteWhisperer</span> your Digital Lab Assistant. Simply upload your notes or protocols and let <span class="highlight">NoteWhisperer</span> read them out loud to You. Keep your workspace clean and your hands free to focus on your experiments without the worry of contaminations.</p>
     <div class="selection text-center">
         <!-- Selection options -->
         <div class="container text-center mt-4">
-            <p>Tell Me The Format Of Your Protocol:</p>
+            <p class="lead">Tell Me The Format Of Your Protocol:</p>
             <div class="btn-group" role="group" aria-label="Document Type">
-                <button type="button" class="btn btn-primary" onclick="showUploadField('image')">Image</button>
-                <button type="button" class="btn btn-secondary" onclick="showUploadField('pdf')">PDF</button>
-            </div>
+                <button type="button" id="imageButton" class="btn btn-primary btn-fixed-width" onclick="highlightButton('image')">Image</button>
+                <button type="button" id="pdfButton" class="btn btn-primary btn-fixed-width" onclick="highlightButton('pdf')">PDF</button>
+            </div>            
         </div>
 
         <form id="uploadForm" class="p-3 text-center" action="/" method="post" enctype="multipart/form-data" style="display: none;">
@@ -63,45 +62,60 @@
 
     </div>
 </div>
+<script>
+    function highlightButton(selectedType) {
+        var imageButton = document.getElementById('imageButton');
+        var pdfButton = document.getElementById('pdfButton');
+        var fileInput = document.getElementById('file-upload');
+        var form = document.getElementById('uploadForm');
 
-    <script>
-        function showUploadField(fileType) {
-            var fileInput = document.getElementById('file-upload');
-            if (fileType === 'image') {
-                fileInput.setAttribute('accept', '.jpg, .jpeg, .png');
-            } else if (fileType === 'pdf') {
-                fileInput.setAttribute('accept', '.pdf');
-            }
-            document.getElementById('uploadForm').style.display = 'block'; // Show the form
+        // Remove active class from both buttons
+        imageButton.classList.remove('btn-active');
+        pdfButton.classList.remove('btn-active');
+
+        // Apply active class to the selected button and set the input accept attribute
+        if (selectedType === 'image') {
+            imageButton.classList.add('btn-active');
+            fileInput.setAttribute('accept', '.jpg, .jpeg, .png');
+        } else if (selectedType === 'pdf') {
+            pdfButton.classList.add('btn-active');
+            fileInput.setAttribute('accept', '.pdf');
         }
 
+        // Display the form
+        form.style.display = 'block';
+    }
 
-        function previewFiles() {
-            var preview = document.getElementById('preview');
-            var files = document.getElementById('file-upload').files;
+    function previewFiles() {
+        var preview = document.getElementById('preview');
+        var files = document.getElementById('file-upload').files;
 
-            // Clear existing previews
-            preview.innerHTML = '';
+        // Clear existing previews
+        preview.innerHTML = '';
 
-            function readAndPreview(file) {
-                if (/\.(jpe?g|png)$/i.test(file.name)) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var image = new Image();
-                        image.height = 250;
-                        image.title = file.name;
-                        image.src = e.target.result;
-                        preview.appendChild(image);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            }
-
-            if (files) {
-                [].forEach.call(files, readAndPreview);
+        function readAndPreview(file) {
+            // Check if the file is an image (JPEG/PNG)
+            if (/\.(jpe?g|png)$/i.test(file.name)) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var image = new Image();
+                    image.height = 250; // Adjust as needed
+                    image.title = file.name;
+                    image.src = e.target.result;
+                    preview.appendChild(image);
+                };
+                reader.readAsDataURL(file);
             }
         }
-    </script>
+
+        // Read and preview each selected file
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    }
+    
+</script>
+
 
     {% if message %}
     <div class="alert alert-danger text-center" role="alert">

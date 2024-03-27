@@ -4,46 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transcription Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/logo_white_cut.png') }}" alt="Logo" height="40">
+          </a>
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h1 class="text-center mt-5" >NoteWhisperer</h1>
-                <h2 class="text-center mt-5">Lets Check the Transcript and Generate the Audio</h2>
-                <p>Here's your protocol transcribed, complete with a Confidence Score to give you a measurement of its accuracy. Dive in, review, and fine-tune as needed. A few moments here ensure your audio guide is spot-on and error-free.</p>
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <form action="{{ url_for('submit_adjusted_transcript') }}" method="post">
-                            <input type="hidden" name="filename" value="{{ filename }}">
-                            <p class="text-center">Confidence Score: {{ confidence_score }}%</p>
+            <!-- Logo Container and Heading -->
+            <div class="col-12 text-center">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NoteWhisperer Logo" class="transcription-logo mb-4">
+                <h2>Let's Check the Transcript and Generate the Audio</h2>
+            </div>
 
-                            <textarea class="form-control" name="transcript" rows="6">{{ transcription }}</textarea>
-                            <p> Ready to perfect your lab assistant's voice?</p>
-                            <div class="form-group mt-3">
-                                <label for="voiceGender">Choose a Voice Gender:</label>
-                                <select class="form-control" id="voiceGender" name="voiceGender" onchange="updateVoiceOptions()">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="voiceName">Choose a Voice:</label>
-                                <select class="form-control" id="voiceName" name="voiceName" onchange="playSample(this.value)">
-                                </select>
-                            </div>
+        <!-- Description Text and Dummy -->
+        <div class="col-md-6">
+            <p>Here's your protocol transcribed, complete with a <span class="score">Confidence Score</span> to give you a measurement of its accuracy. Dive in, review, and fine-tune as needed. A few moments here ensure your audio guide is spot-on and error-free.</p>
+            <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
+        </div>
+
+        <!-- Form Container -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ url_for('submit_adjusted_transcript') }}" method="post">
+                        <input type="hidden" name="filename" value="{{ filename }}">
+                        <h4 class="text-center">Transcript</h4>
+
+                        <textarea class="form-control" name="transcript" rows="6">{{ transcription }}</textarea>
+                        <p class="text"> <span class="score2">Confidence Score: {{ confidence_score }}%</span></p>
+
+                        <!-- Voice Gender Selection -->
+                        <div class="form-group mt-3">
+                            <p>Ready to perfect your lab assistant's voice?</p>
+                            <label for="voiceGender">Choose a Voice Gender:</label>
+                            <select class="form-control" id="voiceGender" name="voiceGender" onchange="updateVoiceOptions()">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <!-- Voice Name Selection -->
+                        <div class="form-group">
+                            <label for="voiceName">Choose a Voice:</label>
+                            <select class="form-control" id="voiceName" name="voiceName" onchange="playSample(this.value)">
+                            </select>
+                        </div>
+                        <!-- Audio Player -->
+                        <div class="audio-player-container">
                             <audio id="voiceSamplePlayer" controls style="width: 100%; display:none;">
                                 <source id="voiceSampleSource" src="" type="audio/wav">
                                 Your browser does not support the audio element.
                             </audio>
-                            
+                        </div>
+                       <div>
                             <button type="submit" class="btn btn-primary mt-3">Generate Audio</button>
-                        </form>
-                    </div>
+                       </div> 
+                        
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <script>
         const maleVoices = {
@@ -82,6 +124,7 @@
         window.onload = function() {
             updateVoiceOptions();
         };
+        
     </script>
     {% if message %}
     <div class="alert alert-danger text-center" role="alert">

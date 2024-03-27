@@ -1,44 +1,230 @@
+/* NAVBAR */
+@media (max-width: 768px) {
+    .navbar {
+      height: 80px; /* Adjust the height for smaller screens */
+    }
+  }
+.navbar {
+    background-color: #182f3fa8 !important; /* Override Bootstrap's .bg-dark color */
+}
+/* Optional: If you want to change the navbar text color to ensure good contrast */
+.navbar-dark .navbar-nav .nav-link {
+    color: #182F3F; /* Adjust the color as needed */
+}
+.navbar-brand {
+    color: #182F3F !important; /* Ensure the brand text is also adjusted for contrast */
+}
 /* Adjust the font size of navbar links */
 .navbar-nav .nav-link {
     font-size: 22px; /* Adjust the size as needed */
 }
-
 /* Optional: Adjust the font size of the navbar brand */
 .navbar-brand {
     font-size: 22px; /* Adjust the size as needed */
 }
-
 /* Increases the space between navigation items */
 .navbar-nav .nav-item {
-    margin-right: 17px; /* Adjust this value as needed */
+    margin-right: 15px; /* Adjust this value as needed */
   }
-  
+  .navbar-nav .nav-item:first-child {
+    margin-left: 20px; /* Adjust this value as needed */
+}
 
 
-  .header-container {
-    text-align: center; 
-    padding: 20px;
-    background-color: #E9E9E8;
-    font-size: 2.0rem; /* Adjust size as needed */
-    color: #192E3C; /* Example: A green background */
+/* HEADER */
+/* Base styling */
+.header-container {
     display: flex;
-    justify-content: center; /* Centers its children (the logo-container and the p tag) horizontally */
-    align-items: center; /* Centers its children vertically */
-    flex-direction: column; /* Stacks the children vertically */
-    width: 100%; /* Ensures the container stretches across the width of its parent */
+    justify-content: space-between; /* Spreads the content across the container */
+    align-items: center; /* Vertically aligns items in the middle */
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.header-container p {
+    font-size: 2.0rem;
+    color: #182F3F;
+    margin-left: 2rem; /* Adds space between the logo and the text */
+    flex-grow: 1; /* Allows the text to fill the space */
+    text-align: left;
+}
+
+.left-side {
+    display: flex;
+    align-items: center; /* Align items in a row in a centered fashion */
+}
+
+.dummy-logo, .title-logo {
+    max-height: 200px; /* Keep both logos the same height for consistency */
+}
+
+.dummy-logo {
+    margin-left: 20px; /* Adds space between the two logos */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        text-align: center; /* Center-align text for smaller screens */
+    }
+    
+    .header-container p {
+        font-size: 4vw; /* Adjusts the font size based on the viewport width */
+        margin-left: 0; /* Resets the left margin for smaller screens */
+        margin-top: 10px; /* Adds some space above the text */
+    }
+    
+    .left-side {
+        flex-direction: column; /* Ensures items are stacked vertically */
+    }
+
+    .dummy-logo, .title-logo {
+        max-height: 150px; /* Adjusts the logo size for smaller screens */
+        margin-left: 0; /* Reset margin-left for consistent alignment */
+        margin-bottom: 10px; /* Adds space below the logo */
+    }
+
+    .dummy-logo {
+        margin-right: 0; /* Resets the right margin for smaller screens */
+    }
 }
 
 
-.logo-container {
-    display: flex; /* Enables Flexbox for side-by-side logo layout */
-    justify-content: center; /* Center the items horizontally in the container */
-    align-items: center; /* Align items vertically in the middle */
-}
 
-.title-logo, .dummy-logo {
-    max-height: 200px; /* Adjust based on your logos' sizes */
-}
+/* CONTENT */
 
 .content-container {
-    margin-top: 25px;
+    background-color: #ffffff31; /* Light background to enhance readability */
+    padding: 30px; /* Ample padding for breathing space */
+    margin-top: 30px; /* Distance from previous sections */
+    margin-bottom: 30px;
+    border-radius: 18px; /* Soft rounded corners */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    max-width: 1300px; /* Maximum width for optimal reading line length */
+    margin-left: auto; /* Together with margin-right:auto, centers the container */
+    margin-right: auto;
 }
+
+.content-container p {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.6; /* Improved line spacing */
+    color: #182f3f; /* Darker text for better contrast */
+    margin-bottom: 20px; /* Space between paragraphs */
+}
+
+.highlight {
+    color: #ffffff
+    ; /* Text color */
+    padding: 0 5px; /* Padding around the text */
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn-fixed-width {
+    margin: 0 15px;
+    width: 120px;
+    background-color: #ffffff5b;
+    border-color:#ffffff5b ;
+    border-radius: 30px !important;
+}
+
+/* Styling for the button group for a cohesive look */
+.btn-active {
+    background-color: #75c6e1
+    !important; /* Bootstrap primary color */
+    color: white !important;
+    border-color: #75c6e1 !important;
+}
+
+/* Enhance the file input for a better user experience */
+#uploadForm {
+    margin-top: 20px; /* Space from the selection */
+}
+
+#file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+#preview img {
+    height: 150px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+
+
+
+/* TRANSCRIPTION.HTML */
+/* LOGO */
+
+.transcription-logo {
+    max-width: 450px; /* Adjust the logo width as needed */
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Centers the logo horizontally */
+    margin-bottom: 30px; /* Increased space below the logo */
+}
+
+.container > .row {
+    margin-top: 20px;
+}
+
+/* HEADER */
+.container .row .col-12 h2 {
+    font-size: 2rem; /* Increased font size for the heading */
+    margin-top: 30px; /* Space above the heading */
+    margin-bottom: 40px; /* Reduced space below the heading for tighter grouping */
+}
+
+.container .row .col-md-6 p {
+    color: #182F3F;
+    font-size: 1.3rem; 
+    line-height: 1.6;
+}
+
+.container .row .col-md-6 h4 {
+    color: #182F3F;
+}
+
+.score {
+    color: #75c6e1;
+    padding: 0 5px; /* Padding around the text */
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.score2 {
+    color: #75c6e1;
+    padding: 0 5px; /* Padding around the text */
+    border-radius: 4px;
+    font-weight: 500;
+    font-size:medium;
+    text-align: right !important;
+}
+
+/* Keep the transcript textarea text color as white */
+.form-control[name="transcript"] {
+    color: #FFF; 
+    font-style: italic;
+}
+
+/* Style for select fields to ensure text is visible */
+.form-control:not([name="transcript"]) {
+    color: #000;
+    background-color: #ffffff7a; 
+}
+
+/* Specific style for the audio player container to ensure spacing */
+.audio-player-container {
+    margin-top: 20px;
+    color: #ffffff7a; 
+
+}
+
+
+
