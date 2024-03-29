@@ -16,17 +16,17 @@
           <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="#">Home
+                <a class="nav-link active" href="{{ url_for('start_over') }}">Home
                   <span class="visually-hidden">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="https://github.com/jantzla/Final-Project-Ironhack-2024/tree/main" target="_blank">About</a>
               </li>
             </ul>
           </div>
         </div>
-    </nav>    
+    </nav>
 
     <div class="container-fluid result">
         <div class="row justify-content-center">
@@ -48,7 +48,7 @@
     </div>
 </div>
         
-        <!-- For each audio file, create a row for its player, logo, and transcript -->
+        <!-- For each audio file, create a row for its player and transcript -->
         {% for audio_file in audio_files %}
         <div class="row align-items-start justify-content-center">
             <div class="col-md-4 d-flex align-items-center justify-content-between">
@@ -73,18 +73,14 @@
         </div>
         {% endfor %}
     
-        <!-- Button Group Centered and Contained -->
-        <div class="row justify-content-center mt-3">
-            <div class="btn-group" role="group" aria-label="Voice Commands">
+        <!-- Button Group -->
+            <div class="btn-group-vertical" role="group" aria-label="Voice Commands">
                 <button type="button" class="btn btn-primary" onclick="startRecognition()">Start Voice Commands</button>
                 <a class="btn btn-secondary" href="{{ url_for('start_over') }}">Upload another Protocol</a>
             </div>
         </div>
-    </div>
-       
-
-
-    
+        
+           
     <script>
         var recognition = new webkitSpeechRecognition();
         recognition.continuous = true;

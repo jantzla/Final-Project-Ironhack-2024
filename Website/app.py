@@ -10,26 +10,28 @@ import uuid
 from dotenv import load_dotenv
 load_dotenv()
 
+# Connection to Flask
 app = Flask(__name__)
-
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default_key')
 
+# Connection to Google Cloud
 vision_client = vision.ImageAnnotatorClient()
 text_to_speech_client = texttospeech_v1.TextToSpeechClient()
 
+# Creating folder for files
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 AUDIO_FOLDER = os.path.join(app.root_path, 'static', 'audio')
-
 if not os.path.exists(AUDIO_FOLDER):
     os.makedirs(AUDIO_FOLDER)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'png', 'jpg', 'jpeg', 'pdf'}
 
+# 1. Page - Link to Upload_Folder
 @app.route('/', methods=['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
@@ -54,6 +56,7 @@ def upload_files():
 
     return render_template('index.html')
 
+# 2. Page - For saving adjusted transcript
 @app.route('/adjust_transcription', methods=['GET'])
 def adjust_transcription():
     index = session.get('current_index', 0)
@@ -74,7 +77,7 @@ def adjust_transcription():
     
     return render_template('transcription.html', transcription=docText, confidence_score=confidence_score, filename=filename)
 
-
+# 2. Page - For displaying transcript and confidence score
 def transcribe_image(image_path):
     with io.open(image_path, 'rb') as image_file:
         content = image_file.read()
@@ -117,13 +120,12 @@ def submit_adjusted_transcript():
         session.modified = True
         return redirect(url_for('result_page'))
 
-
+# 3. Page - Saving adjusted transcrip as audio files
 def save_transcript_as_audio(text, filename):
     client = texttospeech_v1.TextToSpeechClient()
     synthesis_input = texttospeech_v1.SynthesisInput(text=text)
-    
-    # Retrieve the selected voice from the form
-    voice_name = request.form.get('voiceName', 'en-US-Neural2-C')  # Default to 'en-US-Neural2-C'
+
+    voice_name = request.form.get('voiceName', 'en-US-Neural2-C')
     
     voice = texttospeech_v1.VoiceSelectionParams(
         language_code="en-US",

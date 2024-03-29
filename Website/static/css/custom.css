@@ -229,3 +229,16 @@
     margin-left: 50px;
     margin-bottom: 50px;
 }
+
+.btn-group-vertical {
+    display: flex;
+    flex-direction: column;
+    margin-left: 300px;
+    margin-top: -80px;
+
+}
+
+.btn-group-vertical > .btn {
+    width: 20%;
+    margin-bottom: 15px; 
+}
