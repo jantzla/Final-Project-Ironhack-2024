@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
@@ -29,74 +28,74 @@
         </div>
     </nav>
     
-    <div class="container">
+
+    <div class="container-fluid">
         <div class="row justify-content-center">
-            <!-- Logo Container and Heading -->
-            <div class="col-12 text-center">
+            <div class="col-12">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NoteWhisperer Logo" class="transcription-logo mb-4">
-                <h2>Let's Check the Transcript and Generate the Audio</h2>
             </div>
 
-        <!-- Description Text and Dummy -->
-        <div class="col-md-6">
-            <p>Here's your protocol transcribed, complete with a <span class="score">Confidence Score</span> to give you a measurement of its accuracy. Dive in, review, and fine-tune as needed. A few moments here ensure your audio guide is spot-on and error-free.</p>
-            <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
-        </div>
-
-        <!-- Form Container -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ url_for('submit_adjusted_transcript') }}" method="post">
-                        <input type="hidden" name="filename" value="{{ filename }}">
-                        <h4 class="text-center">Transcript</h4>
-
-                        <textarea class="form-control" name="transcript" rows="6">{{ transcription }}</textarea>
-                        <p class="text"> <span class="score2">Confidence Score: {{ confidence_score }}%</span></p>
-
-                        <!-- Voice Gender Selection -->
-                        <div class="form-group mt-3">
-                            <p>Ready to perfect your lab assistant's voice?</p>
-                            <label for="voiceGender">Choose a Voice Gender:</label>
-                            <select class="form-control" id="voiceGender" name="voiceGender" onchange="updateVoiceOptions()">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-                        <!-- Voice Name Selection -->
-                        <div class="form-group">
-                            <label for="voiceName">Choose a Voice:</label>
-                            <select class="form-control" id="voiceName" name="voiceName" onchange="playSample(this.value)">
-                            </select>
-                        </div>
-                        <!-- Audio Player -->
-                        <div class="audio-player-container">
-                            <audio id="voiceSamplePlayer" controls style="width: 100%; display:none;">
-                                <source id="voiceSampleSource" src="" type="audio/wav">
-                                Your browser does not support the audio element.
-                            </audio>
-                        </div>
-                       <div>
-                            <button type="submit" class="btn btn-primary mt-3">Generate Audio</button>
-                       </div> 
-                        
-                    </form>
+        <div class="row">
+            <!-- Description Text -->
+            <div class="col-md-4 description-container">
+                <h2>Let's Check the Transcript and Generate the Audio</h2>
+                <p>Here's your protocol transcribed, complete with a <span class="score">Confidence Score</span> to give you a measurement of its accuracy. Dive in, review, and fine-tune as needed. A few moments here ensure your audio guide is spot-on and error-free.</p>
+            <!-- Logo -->    
+                <div class="sticky-logo-container">
+                    <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
                 </div>
             </div>
-        </div>
+
+         <!-- Form -->
+         <div class="col-md-6 form-container">
+            <div class="card-body">
+                <form action="{{ url_for('submit_adjusted_transcript') }}" method="post">
+                    <input type="hidden" name="filename" value="{{ filename }}">
+
+                    <textarea class="form-control" name="transcript" rows="6">{{ transcription }}</textarea>
+                    <p class="text"> <span class="score2">Confidence Score: {{ confidence_score }}%</span></p>
+
+                    <!-- Voice Gender Selection -->
+                    <div class="form-group mt-3">
+                        <p>Ready to perfect your lab assistant's voice?</p>
+                        <label for="voiceGender">Choose a Voice Gender:</label>
+                        <select class="form-control" id="voiceGender" name="voiceGender" onchange="updateVoiceOptions()">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <!-- Voice Name Selection -->
+                    <div class="form-group">
+                        <label for="voiceName">Choose a Voice:</label>
+                        <select class="form-control" id="voiceName" name="voiceName" onchange="playSample(this.value)">
+                        </select>
+                    </div>
+                    <!-- Audio Player -->
+                    <div class="audio-player-container">
+                        <audio id="voiceSamplePlayer" controls style="width: 100%; display:none;">
+                            <source id="voiceSampleSource" src="" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mt-3 btn-submit">Generate Audio</button>
+                    </div>               
+                </form>
+            </div>
+        </div>     
     </div>
 </div>
 
     <script>
         const maleVoices = {
-            "en-US-Neural2-D": "Voice D",
-            "en-US-Neural2-I": "Voice I",
-            "en-US-Neural2-J": "Voice J",
+            "en-US-Neural2-D": "Sam",
+            "en-US-Neural2-I": "Jack",
+            "en-US-Neural2-J": "Peter",
         };
         const femaleVoices = {
-            "en-US-Neural2-C": "Voice C",
-            "en-US-Neural2-G": "Voice G",
-            "en-US-Neural2-H": "Voice H",
+            "en-US-Neural2-C": "Susan",
+            "en-US-Neural2-G": "Ana",
+            "en-US-Neural2-H": "Kaila",
         };
 
         function updateVoiceOptions() {

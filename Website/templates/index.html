@@ -33,35 +33,42 @@
     </nav>
     
 <!-- Logo and Title Container -->
-<div class="header-container">
-    <div class="left-side">
-        <img src="{{ url_for('static', filename='images/logo_cut.png') }}" alt="NoteWhisperer Logo" class="title-logo">
-        <p>Voice-activate your lab notes for hands-free experiments.</p>
-    </div>
-    <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo">
-</div>
-
-<!-- Rest of the content -->
-<div class="content-container">
-    <p class="lead"> Transform your experimental protocols into an audible format with <span class="highlight">NoteWhisperer</span> your Digital Lab Assistant. Simply upload your notes or protocols and let <span class="highlight">NoteWhisperer</span> read them out loud to You. Keep your workspace clean and your hands free to focus on your experiments without the worry of contaminations.</p>
-    <div class="selection text-center">
-        <!-- Selection options -->
-        <div class="container text-center mt-4">
-            <p class="lead">Tell Me The Format Of Your Protocol:</p>
-            <div class="btn-group" role="group" aria-label="Document Type">
-                <button type="button" id="imageButton" class="btn btn-primary btn-fixed-width" onclick="highlightButton('image')">Image</button>
-                <button type="button" id="pdfButton" class="btn btn-primary btn-fixed-width" onclick="highlightButton('pdf')">PDF</button>
-            </div>            
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NoteWhisperer Logo" class="transcription-logo mb-4">
         </div>
-
-        <form id="uploadForm" class="p-3 text-center" action="/" method="post" enctype="multipart/form-data" style="display: none;">
-            <input id="file-upload" class="form-control" type="file" name="imagefiles" accept="" multiple onchange="previewFiles()">
-            <div id="preview"></div>
-            <input class="btn btn-primary mt-3" type="submit" value="Transform Notes">
-        </form>
-
+        <div class="col-12 text-center">
+            <h2>Voice-Activate your Lab Notes for Hands-Free Experiments.</h2>
+        </div>
     </div>
 </div>
+
+<div class="content-container">
+    <div class="d-flex align-items-center justify-content-start">
+        <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo mr-3">
+        <div>
+            <p class="lead mb-0">Transform your experimental protocols into an audible format with <span class="highlight">NoteWhisperer</span>, your Digital Lab Assistant. <br>Simply upload your notes or protocols and let <span class="highlight">NoteWhisperer</span> read them out loud to You. Keep your workspace clean and your hands free to focus on your experiments without the worry of contaminations.</p>
+        </div>         
+    </div>
+
+    <!-- Format Selection and Upload Form -->
+    <div class="text-center">
+        <p class="lead">Tell Me The Format Of Your Notes:</p>
+        <div class="btn-group" role="group" aria-label="Document Type">
+            <button type="button" id="imageButton" class="btn btn-primary btn-fixed-width" onclick="highlightButton('image')">Image</button>
+            <button type="button" id="pdfButton" class="btn btn-primary btn-fixed-width" onclick="highlightButton('pdf')">PDF</button>
+        </div>   
+    </div>
+
+    <form id="uploadForm" class="p-3 text-center" action="/" method="post" enctype="multipart/form-data" style="display: none;">
+        <input id="file-upload" class="form-control" type="file" name="imagefiles" accept="" multiple onchange="previewFiles()">
+        <div id="preview"></div>
+        <input class="btn btn-primary mt-3" type="submit" value="Transform Notes">
+    </form>
+</div>
+
+
 <script>
     function highlightButton(selectedType) {
         var imageButton = document.getElementById('imageButton');
@@ -94,12 +101,12 @@
         preview.innerHTML = '';
 
         function readAndPreview(file) {
-            // Check if the file is an image (JPEG/PNG)
-            if (/\.(jpe?g|png)$/i.test(file.name)) {
+            // Check if the file is an image (JPEG/PNG/PDF)
+            if (/\.(jpe?g|png|pdf)$/i.test(file.name)) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     var image = new Image();
-                    image.height = 250; // Adjust as needed
+                    image.height = 250;
                     image.title = file.name;
                     image.src = e.target.result;
                     preview.appendChild(image);
@@ -113,7 +120,6 @@
             [].forEach.call(files, readAndPreview);
         }
     }
-    
 </script>
 
 

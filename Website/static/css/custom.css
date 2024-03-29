@@ -30,38 +30,6 @@
     margin-left: 20px; /* Adjust this value as needed */
 }
 
-
-/* HEADER */
-/* Base styling */
-.header-container {
-    display: flex;
-    justify-content: space-between; /* Spreads the content across the container */
-    align-items: center; /* Vertically aligns items in the middle */
-    padding: 20px;
-    background-color: #ffffff;
-}
-
-.header-container p {
-    font-size: 2.0rem;
-    color: #182F3F;
-    margin-left: 2rem; /* Adds space between the logo and the text */
-    flex-grow: 1; /* Allows the text to fill the space */
-    text-align: left;
-}
-
-.left-side {
-    display: flex;
-    align-items: center; /* Align items in a row in a centered fashion */
-}
-
-.dummy-logo, .title-logo {
-    max-height: 200px; /* Keep both logos the same height for consistency */
-}
-
-.dummy-logo {
-    margin-left: 20px; /* Adds space between the two logos */
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .header-container {
@@ -75,22 +43,10 @@
         margin-top: 10px; /* Adds some space above the text */
     }
     
-    .left-side {
-        flex-direction: column; /* Ensures items are stacked vertically */
-    }
-
-    .dummy-logo, .title-logo {
-        max-height: 150px; /* Adjusts the logo size for smaller screens */
-        margin-left: 0; /* Reset margin-left for consistent alignment */
-        margin-bottom: 10px; /* Adds space below the logo */
-    }
-
     .dummy-logo {
         margin-right: 0; /* Resets the right margin for smaller screens */
     }
 }
-
-
 
 /* CONTENT */
 
@@ -104,6 +60,13 @@
     max-width: 1300px; /* Maximum width for optimal reading line length */
     margin-left: auto; /* Together with margin-right:auto, centers the container */
     margin-right: auto;
+}
+
+.dummy-logo {
+    max-width: 250px; /* Adjust as needed */
+    height: auto;
+    margin-right: 15px;
+    margin-top: 10px;
 }
 
 .content-container p {
@@ -130,7 +93,6 @@
     border-radius: 30px !important;
 }
 
-/* Styling for the button group for a cohesive look */
 .btn-active {
     background-color: #75c6e1
     !important; /* Bootstrap primary color */
@@ -138,9 +100,8 @@
     border-color: #75c6e1 !important;
 }
 
-/* Enhance the file input for a better user experience */
 #uploadForm {
-    margin-top: 20px; /* Space from the selection */
+    margin-top: 20px;
 }
 
 #file-upload {
@@ -153,78 +114,118 @@
 #preview img {
     height: 150px;
     margin-top: 20px;
+    margin-right: 20px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
 
-
+/* ----------------------------------------------------------------- */
 
 /* TRANSCRIPTION.HTML */
-/* LOGO */
+.sticky-logo-container {
+    position: sticky;
+    top: 0; /* Adjust this value based on your navbar's height */
+    z-index: 1000; /* Ensure it stays on top of other content */
+    align-self: self-end;
+}
 
+
+/* LOGO */
 .transcription-logo {
     max-width: 450px; /* Adjust the logo width as needed */
     height: auto;
     display: block;
     margin: 0 auto; /* Centers the logo horizontally */
+    margin-top: 30px;
     margin-bottom: 30px; /* Increased space below the logo */
 }
 
-.container > .row {
-    margin-top: 20px;
+/* CONTAINERS */
+.description-container {
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 50px;
 }
-
-/* HEADER */
-.container .row .col-12 h2 {
-    font-size: 2rem; /* Increased font size for the heading */
-    margin-top: 30px; /* Space above the heading */
-    margin-bottom: 40px; /* Reduced space below the heading for tighter grouping */
-}
-
-.container .row .col-md-6 p {
+.description-container p {
     color: #182F3F;
-    font-size: 1.3rem; 
-    line-height: 1.6;
+    font-size: 1.2rem;
 }
 
-.container .row .col-md-6 h4 {
+.form-container  {
+    margin-left: 50px;
+    margin-bottom: 50px;
+    background: #ffffff42;
+    border-radius: 5%;
+}
+
+.form-container p {
+    color: #182F3F;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.form-container h3 {
     color: #182F3F;
 }
 
 .score {
-    color: #75c6e1;
-    padding: 0 5px; /* Padding around the text */
+    color: #D13480;
+    padding: 0 5px;
     border-radius: 4px;
     font-weight: bold;
 }
 
 .score2 {
-    color: #75c6e1;
-    padding: 0 5px; /* Padding around the text */
+    color: #D13480;
+    padding: 0 5px; 
     border-radius: 4px;
     font-weight: 500;
     font-size:medium;
     text-align: right !important;
 }
 
-/* Keep the transcript textarea text color as white */
 .form-control[name="transcript"] {
-    color: #FFF; 
     font-style: italic;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
 }
 
-/* Style for select fields to ensure text is visible */
 .form-control:not([name="transcript"]) {
-    color: #000;
+    color: #182F3F;
     background-color: #ffffff7a; 
 }
 
-/* Specific style for the audio player container to ensure spacing */
 .audio-player-container {
     margin-top: 20px;
     color: #ffffff7a; 
+}
 
+.form-container .btn-submit {
+    display: block; 
+    width: auto; 
+    margin: 20px auto;
+     
 }
 
 
+/* ----------------------------------------------------------------- */
+/* RESULT.html */
+.bold {
+    color: #D13480; /* Emphasizing color */
+}
 
+.result h2 {
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}
+
+.result p {
+    color: #182F3F;
+    font-size: 1.2rem !important;
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-bottom: 50px;
+}

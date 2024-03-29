@@ -1,30 +1,90 @@
-<div class="container">
-    <h1>NoteWhisperer</h1>
-    <p>Your audio guide is ready! Now you can control playback through simple voice commands.</p>
-    {% for transcript in transcripts %}
-    <div class="card mt-3">
-        <div class="card-body">
-            <h3 class="card-title">Transcript Upload {{ loop.index }}</h3>
-            <textarea class="form-control" rows="6" disabled>{{ transcript }}</textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcription Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/logo_white_cut.png') }}" alt="Logo" height="40">
+          </a>
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>    
+
+    <div class="container-fluid result">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="NoteWhisperer Logo" class="transcription-logo mb-4">
+            </div>
+        </div>
+    
+<!-- Introduction Text and Dummy Logo Row -->
+<div class="row align-items-center">
+    <!-- Introduction Text Column -->
+    <div class="col-md-7">
+        <h2><span class="bold">Your Audio Guide is Ready!</span><br>Control the Audio Through Simple Voice Commands.</h2>
+        <p><span class="bold">Play</span>, <span class="bold">Pause</span>, or <span class="bold">Stop</span> as you work through your experiment—hands-free and focused. Remember, NoteWhisperer is here to assist whenever you're ready for the next set of notes or protocols. Just load them up, and let's continue making science easier together.</p>
+    </div>
+    <!-- Dummy Logo Column -->
+    <div class="col-md-5 text-center">
+        <img src="{{ url_for('static', filename='images/dummy_logo.png') }}" alt="Logo" class="dummy-logo" style="max-width: 250px;">
+    </div>
+</div>
+        
+        <!-- For each audio file, create a row for its player, logo, and transcript -->
+        {% for audio_file in audio_files %}
+        <div class="row align-items-start justify-content-center">
+            <div class="col-md-4 d-flex align-items-center justify-content-between">
+                <div class="audio-player">
+                    <h4>Audio Upload {{ loop.index }}</h4>
+                    <audio controls id="audio-{{ loop.index }}">
+                        <source src="{{ url_for('static', filename='audio/' + audio_file) }}" type="audio/mp3">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+            
+            <!-- Transcript Card -->
+            <div class="col-md-4 notes-upload">
+                <h4>Transcript Upload {{ loop.index }}</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <textarea class="form-control" rows="6" disabled>{{ transcripts[loop.index0] }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    
+        <!-- Button Group Centered and Contained -->
+        <div class="row justify-content-center mt-3">
+            <div class="btn-group" role="group" aria-label="Voice Commands">
+                <button type="button" class="btn btn-primary" onclick="startRecognition()">Start Voice Commands</button>
+                <a class="btn btn-secondary" href="{{ url_for('start_over') }}">Upload another Protocol</a>
+            </div>
         </div>
     </div>
-    {% endfor %}
-    
-    {% for audio_file in audio_files %}
-    <div class="audio-player mt-3">
-        <p>Play, pause, or stop as you work through your experiment-hands-free and focused. Remember, NoteWhisperer is here to assist whenever you're ready for the next set of notes or protocols. Just load them up, and let's continue making science easier together.</p>
-        <h3>Audio Upload {{ loop.index }}</h3>
-        <audio controls id="audio-{{ loop.index }}">
-            <source src="{{ url_for('static', filename='audio/' + audio_file) }}" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
-    {% endfor %}
- 
-    
-    <button class="btn btn-primary mt-3" onclick="startRecognition()">Start Voice Commands</button>
+       
 
 
+    
     <script>
         var recognition = new webkitSpeechRecognition();
         recognition.continuous = true;
@@ -76,8 +136,6 @@
             recognition.start();
         }
     </script>
-    
 
-    <a href="{{ url_for('start_over') }}" class="btn btn-secondary mt-3">Upload another Protocol</a>
-
-</div>
+</body>
+</html>
